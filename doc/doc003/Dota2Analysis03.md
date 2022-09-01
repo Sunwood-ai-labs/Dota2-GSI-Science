@@ -1,0 +1,460 @@
+## Dota2 解析プログラム
+
+### Import package
+
+
+```python
+import dota2gsi
+import glob
+import pandas as pd
+
+import seaborn as sns
+from matplotlib import pyplot as plt
+import matplotlib as mpl
+```
+
+### figure style
+
+
+```python
+
+#sns.palplot(sns.color_palette("RdBu_r", 24))
+#sns.set_palette("RdBu_r")
+#sns.set(style='darkgrid')
+#sns.set_style('whitegrid')
+mpl.style.use('fivethirtyeight')
+```
+
+### Read csv file
+
+
+```python
+target_log_file_list = ["log_20220901-160140.csv", "log_20220901-204148.csv"]
+```
+
+
+```python
+df_list = []
+for file_path in target_log_file_list:
+    df_list.append(pd.read_csv(file_path))
+```
+
+    C:\Users\Polaris2\AppData\Local\Temp\ipykernel_27216\424041878.py:3: DtypeWarning: Columns (1,2,5,6,9,12,17,21,22,23,24,25,26,27,28,29,30) have mixed types. Specify dtype option on import or set low_memory=False.
+      df_list.append(pd.read_csv(file_path))
+    C:\Users\Polaris2\AppData\Local\Temp\ipykernel_27216\424041878.py:3: DtypeWarning: Columns (1,2,5,6,9,12,17,21,22,23,24,25,26,27,28,29,30) have mixed types. Specify dtype option on import or set low_memory=False.
+      df_list.append(pd.read_csv(file_path))
+    
+
+
+```python
+df_list[0].head(5)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Unnamed: 0</th>
+      <th>alive</th>
+      <th>break</th>
+      <th>buyback_cost</th>
+      <th>buyback_cooldown</th>
+      <th>disarmed</th>
+      <th>has_debuff</th>
+      <th>health</th>
+      <th>health_percent</th>
+      <th>hexed</th>
+      <th>...</th>
+      <th>kills</th>
+      <th>last_hits</th>
+      <th>net_worth</th>
+      <th>pro_name</th>
+      <th>runes_activated</th>
+      <th>support_gold_spent</th>
+      <th>wards_destroyed</th>
+      <th>wards_placed</th>
+      <th>wards_purchased</th>
+      <th>xpm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 67 columns</p>
+</div>
+
+
+
+
+```python
+df_list[0].columns
+```
+
+
+
+
+    Index(['Unnamed: 0', 'alive', 'break', 'buyback_cost', 'buyback_cooldown',
+           'disarmed', 'has_debuff', 'health', 'health_percent', 'hexed', 'id',
+           'level', 'magicimmune', 'mana', 'mana_percent', 'max_health',
+           'max_mana', 'muted', 'name', 'respawn_seconds', 'selected_unit',
+           'silenced', 'stunned', 'talent_1', 'talent_2', 'talent_3', 'talent_4',
+           'talent_5', 'talent_6', 'talent_7', 'talent_8', 'xpos', 'ypos',
+           'clock_time', 'daytime', 'dire_ward_purchase_cooldown', 'game_state',
+           'game_time', 'name.1', 'matchid', 'radiant_ward_purchase_cooldown',
+           'nightstalker_night', 'roshan_state', 'roshan_state_end_seconds',
+           'win_team', 'customgamename', 'assists', 'camps_stacked', 'deaths',
+           'denies', 'gold', 'gold_reliable', 'gold_unreliable', 'gpm',
+           'hero_damage', 'kill_list:victimid_#', 'kill_streak', 'kills',
+           'last_hits', 'net_worth', 'pro_name', 'runes_activated',
+           'support_gold_spent', 'wards_destroyed', 'wards_placed',
+           'wards_purchased', 'xpm'],
+          dtype='object')
+
+
+
+### Plot level section
+
+#### Extract level data
+
+
+```python
+df_ex_data_list = []
+for i, df in enumerate(df_list):
+    target_name = 'level'
+    plot_name = '{}_try{}'.format(target_name, i)
+    df[plot_name] = df[target_name]
+    df_ex_data_list.append(df[plot_name])
+
+df_ex_merge = pd.concat(df_ex_data_list, axis=1)
+```
+
+
+```python
+df_ex_merge
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>level_try0</th>
+      <th>level_try1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>29396</th>
+      <td>18.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>29397</th>
+      <td>18.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>29398</th>
+      <td>18.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>29399</th>
+      <td>18.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>29400</th>
+      <td>18.0</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>29401 rows × 2 columns</p>
+</div>
+
+
+
+#### Plot level data
+
+
+```python
+plt.figure(figsize=(20,5))
+sns.lineplot(data=df_ex_merge, lw=2)
+#sns.lineplot(data=df_data, x='clock_time', y='level', lw=2)
+```
+
+
+
+
+    <AxesSubplot:>
+
+
+
+
+    
+![png](output_15_1.png)
+    
+
+
+### Plot health section
+
+#### Extract health data
+
+
+```python
+df_ex_data_list = []
+for i, df in enumerate(df_list):
+    target_name = 'health'
+    plot_name = '{}_try{}'.format(target_name, i)
+    df[plot_name] = df[target_name]
+    df_ex_data_list.append(df[plot_name])
+
+df_ex_merge = pd.concat(df_ex_data_list, axis=1)
+```
+
+#### Plot health data
+
+
+```python
+plt.figure(figsize=(20,5))
+sns.lineplot(data=df_ex_merge, lw=2)
+```
+
+
+
+
+    <AxesSubplot:>
+
+
+
+
+    
+![png](output_20_1.png)
+    
+
+
+### Plot gold data
+
+#### Extract gold data
+
+
+```python
+df_ex_data_list = []
+for i, df in enumerate(df_list):
+    target_name = 'gold'
+    plot_name = '{}_try{}'.format(target_name, i)
+    df[plot_name] = df[target_name]
+    df_ex_data_list.append(df[plot_name])
+
+df_ex_merge = pd.concat(df_ex_data_list, axis=1)
+```
+
+#### Plot gold data
+
+
+```python
+plt.figure(figsize=(20,5))
+sns.lineplot(data=df_ex_merge, lw=2)
+```
+
+
+
+
+    <AxesSubplot:>
+
+
+
+
+    
+![png](output_25_1.png)
+    
+
+
+
+```python
+
+```
