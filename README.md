@@ -1,6 +1,6 @@
 # Dota2-GSI-Science
 
-## はじめに
+## 1.1. はじめに
 
 
 最近，Dota2を始めましたが全く勝てません
@@ -8,20 +8,20 @@
 
 色々と調べても「死ぬな」くらいのことしか分らず苦戦しています．
 
-### データサイエンスでDota2強くなるかも説
+### 1.1.1. データサイエンスでDota2強くなるかも説
 
 そこで，データサイエンスの力を借りて，どのような状況なら勝っているか？や前回に比べてどのように振舞ったから勝てたのか？ということを数値化して分析していけば強くなるのでは！と考えました．本企画はその仮説を検証していく企画です．
 
-### 今回の概要
+### 1.1.2. 今回の概要
 
 Dota2の情報をPythonで取得するまでをやっていきます．
 
 
-## Game State Integrationの設定
+## 1.2. Game State Integrationの設定
 
 Game State Integration(以下GSI)はゲーム中のデータを取得するための公式APIで，こちらを使っていきます．
 
-### GSIファイルの作成
+### 1.2.1. GSIファイルの作成
 
 `gamestate_integration_py.cfg`というファイル名で作成します．
 
@@ -61,7 +61,7 @@ Game State Integration(以下GSI)はゲーム中のデータを取得するた�
 ![file](https://hamaruki.com/wp-content/uploads/2022/09/image-1662007423662.png)
 
 
-### 起動設定
+### 1.2.2. 起動設定
 
 メニューの一般から起動オプション`-gamestateintegration`を付けます．
 
@@ -69,9 +69,9 @@ Game State Integration(以下GSI)はゲーム中のデータを取得するた�
 ![file](https://hamaruki.com/wp-content/uploads/2022/09/image-1662007521159.png)
 
 
-## Pythonとの連携
+## 1.3. Pythonとの連携
 
-### パッケージのインストール
+### 1.3.1. パッケージのインストール
 
 `dota2gsi`をインストールします．
 
@@ -79,7 +79,7 @@ Game State Integration(以下GSI)はゲーム中のデータを取得するた�
 pip install dota2gsi==0.1
 ```
 
-### サンプルコード
+### 1.3.2. サンプルコード
 
 体力やマナなど，基本的な情報を取得するコードです．
 
@@ -112,7 +112,7 @@ server.on_update(demo_handle_state)
 server.start()
 ```
 
-### データのID
+### 1.3.3. データのID
 
 サンプルコードで使用しているIDの詳細はこちらにあります．
 
@@ -120,7 +120,7 @@ https://github.com/xzion/dota2-gsi
 
 
 
-### 実行結果
+### 1.3.4. 実行結果
 
 実行するとこんな感じで結構早い周期でデータを取得することができます．
 
@@ -160,7 +160,7 @@ Server stopped.
 
 
 
-## おわりに
+## 1.4. おわりに
 
 こんかいは無事にDota2とPythonを連携させることができました．
 次回はもう少し取得するデータを拡張し，データを保存する機構を作っていこうと思います．
