@@ -18,28 +18,17 @@ class Dota2Analy:
         # setting param
         #
         tdatetime = dt.now()
-        
         self.log_dir    = "logs"
         self.tstr       = tdatetime.strftime('%Y%m%d_%H%M%S')
         self.tag        = "v2"
         self.save_dir   = "{}/{}/{}".format(self.log_dir, self.tag, self.tstr) 
-        
         self.time_offset = 80
         
         os.makedirs(self.save_dir, exist_ok=True)
         
 
     def _realtime_handle_state2(self, last_state, state):
-        
-        ##############################################
-        # save hero and clock time
-        #
-        # if("hero" in state.keys()):
-        #     if("name" in state["hero"].keys()):
-        # clock_time2 = "{:09d}".format(state["map"]["clock_time"]+self.time_offset)
-        # hero_name   = "{}".format(state["hero"]["name"])
-        # save_file_path = "{}/{}_{}.json".format(self.save_dir, clock_time2, hero_name)
-        
+
         ##############################################
         # save timestamp
         #
