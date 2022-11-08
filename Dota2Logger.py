@@ -18,7 +18,8 @@ class Dota2Analy:
         
         self.log_dir    = "logs"
         self.tstr       = tdatetime.strftime('%Y%m%d_%H%M%S')
-        self.save_dir   = "{}/{}".format(self.log_dir, self.tstr) 
+        self.tag        = "v2"
+        self.save_dir   = "{}/{}/{}".format(self.log_dir, self.tag, self.tstr) 
         
         self.time_offset = 80
         
@@ -27,20 +28,24 @@ class Dota2Analy:
 
     def _realtime_handle_state2(self, last_state, state):
         
-        if("hero" in state.keys()):
-            if("name" in state["hero"].keys()):
+        # if("hero" in state.keys()):
+        #     if("name" in state["hero"].keys()):
                 
 
-                clock_time2 = "{:09d}".format(state["map"]["clock_time"]+self.time_offset)
-                hero_name   = "{}".format(state["hero"]["name"])
-                save_file_path = "{}/{}_{}.json".format(self.save_dir, clock_time2, hero_name)
-                
-                print("-------------------------------------")
-                # print(state["map"]["clock_time"])
-                print(clock_time2)
-                
-                with open(save_file_path, 'w') as f:
-                    json.dump(state, f, indent=4)
+        # clock_time2 = "{:09d}".format(state["map"]["clock_time"]+self.time_offset)
+        # hero_name   = "{}".format(state["hero"]["name"])
+        # save_file_path = "{}/{}_{}.json".format(self.save_dir, clock_time2, hero_name)
+        
+        dt_now = dt.now()
+        tstr       = dt_now.strftime('%Y%m%d_%H%M%S')
+        save_file_path = "{}/{}.json".format(self.save_dir, tstr)
+        
+        print("-------------------------------------")
+        # print(state["map"]["clock_time"])
+        print(save_file_path)
+        
+        with open(save_file_path, 'w') as f:
+            json.dump(state, f, indent=4)
         
     def run(self):
         server = dota2gsi.Server(ip='0.0.0.0', port=3000)
