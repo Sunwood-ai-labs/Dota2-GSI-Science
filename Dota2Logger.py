@@ -6,6 +6,7 @@ import pandas as pd
 import os
 from datetime import datetime as dt
 import json
+from loguru import logger
 
 pd.set_option('display.max_columns', 5)
 
@@ -41,7 +42,8 @@ class Dota2Analy:
         #
         print("-------------------------------------")
         # print(state["map"]["clock_time"])
-        print(save_file_path)
+        # print(save_file_path)
+        logger.info(save_file_path)
         
         ##############################################
         # save json
