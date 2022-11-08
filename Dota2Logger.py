@@ -14,6 +14,9 @@ class Dota2Analy:
     def __init__(self, funname="dota2"):
         self.funname = funname
         
+        ##############################################
+        # setting param
+        #
         tdatetime = dt.now()
         
         self.log_dir    = "logs"
