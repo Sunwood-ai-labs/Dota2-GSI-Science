@@ -40,9 +40,6 @@ class Dota2Analy:
         ##############################################
         # logger
         #
-        print("-------------------------------------")
-        # print(state["map"]["clock_time"])
-        # print(save_file_path)
         logger.info(save_file_path)
         
         ##############################################
