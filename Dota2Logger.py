@@ -18,12 +18,10 @@ class Dota2Analy:
         # setting param
         #
         tdatetime = dt.now()
-        
         self.log_dir    = "logs"
         self.tstr       = tdatetime.strftime('%Y%m%d_%H%M%S')
         self.tag        = "v2"
         self.save_dir   = "{}/{}/{}".format(self.log_dir, self.tag, self.tstr) 
-        
         self.time_offset = 80
         
         os.makedirs(self.save_dir, exist_ok=True)
