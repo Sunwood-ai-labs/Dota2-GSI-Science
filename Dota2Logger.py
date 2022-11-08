@@ -28,14 +28,18 @@ class Dota2Analy:
 
     def _realtime_handle_state2(self, last_state, state):
         
+        ##############################################
+        # save hero and clock time
+        #
         # if("hero" in state.keys()):
         #     if("name" in state["hero"].keys()):
-                
-
         # clock_time2 = "{:09d}".format(state["map"]["clock_time"]+self.time_offset)
         # hero_name   = "{}".format(state["hero"]["name"])
         # save_file_path = "{}/{}_{}.json".format(self.save_dir, clock_time2, hero_name)
         
+        ##############################################
+        # save timestamp
+        #
         dt_now = dt.now()
         tstr       = dt_now.strftime('%Y%m%d_%H%M%S')
         save_file_path = "{}/{}.json".format(self.save_dir, tstr)
@@ -44,6 +48,9 @@ class Dota2Analy:
         # print(state["map"]["clock_time"])
         print(save_file_path)
         
+        ##############################################
+        # save json
+        #
         with open(save_file_path, 'w') as f:
             json.dump(state, f, indent=4)
         
