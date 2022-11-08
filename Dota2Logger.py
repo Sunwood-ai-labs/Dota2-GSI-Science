@@ -47,6 +47,9 @@ class Dota2Analy:
         tstr       = dt_now.strftime('%Y%m%d_%H%M%S')
         save_file_path = "{}/{}.json".format(self.save_dir, tstr)
         
+        ##############################################
+        # logger
+        #
         print("-------------------------------------")
         # print(state["map"]["clock_time"])
         print(save_file_path)
